@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,16 +47,13 @@ public class DataInitializer implements CommandLineRunner {
 
   private final BookRepository bookRepository;
   private final UserRepository userRepository;
-  private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public DataInitializer(
       BookRepository bookRepository,
-      UserRepository userRepository,
-      PasswordEncoder passwordEncoder) {
+      UserRepository userRepository) {
     this.bookRepository = bookRepository;
     this.userRepository = userRepository;
-    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -76,35 +72,30 @@ public class DataInitializer implements CommandLineRunner {
                 new User(
                     SERVICE_USER_IDENTIFIER,
                     "service-account-library-client@placeholder.org",
-                    passwordEncoder.encode("wayne"),
                     "n/a",
                     "n/a",
                     Collections.singletonList("USER")),
                 new User(
                     WAYNE_USER_IDENTIFIER,
                     "bruce.wayne@example.com",
-                    passwordEncoder.encode("wayne"),
                     "Bruce",
                     "Wayne",
                     Collections.singletonList(Role.LIBRARY_USER.name())),
                 new User(
                     BANNER_USER_IDENTIFIER,
                     "bruce.banner@example.com",
-                    passwordEncoder.encode("banner"),
                     "Bruce",
                     "Banner",
                     Collections.singletonList(Role.LIBRARY_USER.name())),
                 new User(
                     CURATOR_IDENTIFIER,
                     "peter.parker@example.com",
-                    passwordEncoder.encode("parker"),
                     "Peter",
                     "Parker",
                     Collections.singletonList(Role.LIBRARY_CURATOR.name())),
                 new User(
                     ADMIN_IDENTIFIER,
                     "clark.kent@example.com",
-                    passwordEncoder.encode("kent"),
                     "Clark",
                     "Kent",
                     Collections.singletonList(Role.LIBRARY_ADMIN.name())))

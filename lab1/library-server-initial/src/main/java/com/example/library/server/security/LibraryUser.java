@@ -21,6 +21,11 @@ public class LibraryUser extends User implements UserDetails {
   }
 
   @Override
+  public String getPassword() {
+    return "n/a";
+  }
+
+  @Override
   public String getUsername() {
     return getEmail();
   }

@@ -43,7 +43,6 @@ public class User extends AbstractPersistable<Long> {
     this(
         user.getIdentifier(),
         user.getEmail(),
-        user.getPassword(),
         user.getFirstName(),
         user.getLastName(),
         user.getRoles());
@@ -53,13 +52,11 @@ public class User extends AbstractPersistable<Long> {
   public User(
       UUID identifier,
       String email,
-      String password,
       String firstName,
       String lastName,
       List<String> roles) {
     this.identifier = identifier;
     this.email = email;
-    this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.roles = roles;
@@ -105,14 +102,6 @@ public class User extends AbstractPersistable<Long> {
     this.roles = roles;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -121,7 +110,6 @@ public class User extends AbstractPersistable<Long> {
     User user = (User) o;
     return identifier.equals(user.identifier)
         && email.equals(user.email)
-        && password.equals(user.password)
         && firstName.equals(user.firstName)
         && lastName.equals(user.lastName)
         && Objects.equals(roles, user.roles);
@@ -129,7 +117,7 @@ public class User extends AbstractPersistable<Long> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), identifier, email, password, firstName, lastName, roles);
+    return Objects.hash(super.hashCode(), identifier, email, firstName, lastName, roles);
   }
 
   @Override
@@ -139,9 +127,6 @@ public class User extends AbstractPersistable<Long> {
         + identifier
         + ", email='"
         + email
-        + '\''
-        + ", password='"
-        + password
         + '\''
         + ", firstName='"
         + firstName

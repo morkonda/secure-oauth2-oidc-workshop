@@ -8,7 +8,6 @@ import com.example.library.server.dataaccess.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,13 +32,11 @@ public class UserRestController {
 
   private final UserService userService;
   private final UserResourceAssembler userResourceAssembler;
-  private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserRestController(UserService userService, UserResourceAssembler userResourceAssembler, PasswordEncoder passwordEncoder) {
+  public UserRestController(UserService userService, UserResourceAssembler userResourceAssembler) {
     this.userService = userService;
     this.userResourceAssembler = userResourceAssembler;
-    this.passwordEncoder = passwordEncoder;
   }
 
   @ResponseStatus(HttpStatus.OK)
@@ -71,7 +68,6 @@ public class UserRestController {
         new User(
             modifyingUserResource.getIdentifier(),
             modifyingUserResource.getEmail(),
-            passwordEncoder.encode(modifyingUserResource.getPassword()),
             modifyingUserResource.getFirstName(),
             modifyingUserResource.getLastName(),
             modifyingUserResource.getRoles().stream().map(Enum::name).collect(Collectors.toList()));
@@ -103,7 +99,6 @@ public class UserRestController {
               u.setEmail(modifyingUserResource.getEmail());
               u.setFirstName(modifyingUserResource.getFirstName());
               u.setLastName(modifyingUserResource.getLastName());
-              u.setPassword(passwordEncoder.encode(modifyingUserResource.getPassword()));
               u.setRoles(
                   modifyingUserResource.getRoles().stream()
                       .map(Enum::name)

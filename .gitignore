@@ -31,3 +31,5 @@ hs_err_pid*
 out/
 bin/
 .vscode/
+setup/run_keycloak_docker.bat
+osw-workshop.code-workspace
